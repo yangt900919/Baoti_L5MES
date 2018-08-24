@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="L5MES:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="L5MES.war">
+      <element id="artifact" artifact-name="L5MES:war exploded" />
+    </root>
+  </artifact>
+</component>
