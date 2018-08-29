@@ -79,7 +79,7 @@ public class ExceptionController {
     }
 
     @RequestMapping(value = "exception/create")
-    public ModelAndView Create(int stepID, @ModelAttribute("WorkStep")WorkSteps WorkStep, @ModelAttribute("User")UserInfo user,
+    public ModelAndView Create(HttpServletRequest request,int stepID, @ModelAttribute("WorkStep")WorkSteps WorkStep, @ModelAttribute("User")UserInfo user,
                                @ModelAttribute("Access_token")String token)
     {
         ModelAndView mav=new ModelAndView("exception/edit");
@@ -89,8 +89,19 @@ public class ExceptionController {
         ei.setFactName(user.getFactName());
         ei.setProcessId(WorkStep.getId());
         ei.setProcessName(WorkStep.getOperName());
-        ei.setCardId(0);
-        ei.setCardNo("");
+        if(request.getSession().getAttribute("workcard")==null)
+        {
+            ei.setCardId(0);
+            ei.setCardNo("");
+        }
+       else
+        {
+            CardAndChilden workcard= (CardAndChilden) request.getSession().getAttribute("workcard");
+            if(workcard!=null&&workcard.getProcessFlowCard()!=null) {
+                ei.setCardId(workcard.getProcessFlowCard().getId());
+                ei.setCardNo(workcard.getProcessFlowCard().getCardNo());
+            }
+        }
         ei.setDeptId(user.getDeptID());
         ei.setDeptName(user.getDeptName());
         ei.setTeamId(user.getTeamID());

@@ -90,21 +90,21 @@
     <div class="clearfix phone"></div>
     <div class="container ">
         <div class="content ">
-            <%--<c:if test="${msg!=''&&msg!=null }">
+            <c:if test="${msg!=''&&msg!=null }">
                 <script>
-                    alert(${msg});
+                    alert("${msg}");
                 </script>
-                &lt;%&ndash;<div class="alert alert-danger alert-dismissible" role="alert">
+                <%--<div class="alert alert-danger alert-dismissible" role="alert">
                     <a type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></a>
                         ${msg }
-                </div>&ndash;%&gt;
-            </c:if>--%>
-                <c:if test="${msg!=''&&msg!=null }">
+                </div>--%>
+            </c:if>
+             <%--   <c:if test="${msg!=''&&msg!=null }">
                     <div class="alert alert-danger alert-dismissible" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             ${msg }
                     </div>
-                </c:if>
+                </c:if>--%>
         <form method="post" action="Login" class="fom" target="_top">
             <input type="text" class="form-control" id="usernameOrEmailAddress" name="usernameOrEmailAddress" placeholder="用户名或邮箱地址">
             <input type="password" class="form-control" id="password" name="password" placeholder="密码">

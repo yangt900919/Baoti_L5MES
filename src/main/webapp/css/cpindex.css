@@ -51,14 +51,15 @@ body{
 }
 .right{
     width: 40%;
-    height: 100%;
-    top:45%;
-    transform: translateY(45%);
+    height: 66%;
+  /*  top:45%;
+    transform: translateY(45%);*/
     margin-left: 2%;
     color: #818181;
     /*background: #00F7DE;*/
     font-size: 1em;
     float: left;
+    padding-top: 10px;
 }
 .left{
     width: 50%;
@@ -118,7 +119,7 @@ body{
     height: 50%;
 }
 
-select
+select,input
 {
     height: 100%;
     width: 100%;
@@ -147,17 +148,19 @@ select
         color: #818181;
         font-size: 0.8em;
         padding-top: 18px;
+
     }
     .right{
         width: 50%;
-        height: 100%;
-        top:45%;
-        transform: translateY(45%);
+        height: 66%;
+    /*    top:45%;*/
+       /* transform: translateY(45%);*/
         margin-left: 2%;
         color: #818181;
         /*background: #00F7DE;*/
         font-size: 0.8em;
         float: left;
+        padding-top: 5px;
     }
     .left{
         width: 40%;
@@ -198,7 +201,7 @@ select
         height: 50%;
         width: 45%;
     }
-    select
+    select,input
     {
         height: 100%;
         width: 100%;
@@ -258,5 +261,16 @@ footer button{
     border: none;
 }
 footer img{
-    width: 18%;
+    width: 15%;
+}
+
+.bottom-box-left
+{
+    float:left;
+    margin-left: 2%;
+
+}
+.bottom-box-right
+{
+    float: right;
 }

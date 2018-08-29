@@ -70,7 +70,7 @@
             </div><!-- /.container-fluid -->
         </nav>
         <div class="page-content">
-          &lt;%&ndash;  ${AccessInfo.access_token}&ndash;%&gt;
+          &lt;%&ndash;  ${AccessUtil.access_token}&ndash;%&gt;
             <iframe id=iframe frameborder="0" src="${page}" scrolling="yes" name=myiframe>
 
             </iframe>

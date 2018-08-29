@@ -24,6 +24,7 @@
         <form action="ProcessFlowCardAndChildensList">
             <input type="text" name="CardNO" id="CardNO" placeholder="请输入工艺号" value="${cardNo.CardNO}">
            <input type="hidden" name="stepID" value="${stepID}">
+            <input type="hidden" name="url" value="complete/card">
             <button type="submit" >查询</button>
         </form>
 
@@ -51,12 +52,15 @@
     <%--<button onclick="location.href='create?stepID=${stepID}'"><img src="../img/btn_gongxu_txjgxx.png" alt=""></button>--%>
    <c:choose>
        <c:when test="${workcard.processFlowCard.cardNo!=null && workcard.processFlowCard.cardNo!=''}">
-           <button onclick="location.href='create?stepID=${cardNo.stepID}'"><img src="../img/btn_gongxu_txjgxx.png" alt=""></button>
+           <button class="wg" onclick="location.href='create?stepID=${cardNo.stepID}'"><img src="../img/wg.png" alt=""></button>
+           <button class="yc" onclick="location.href='../exception/create?stepID=${cardNo.stepID}'"><img src="../img/yc.png" alt=""></button>
        </c:when>
        <c:otherwise>
-           <button style="background: #dbdbdb !important;" disabled><img src="../img/btn_gongxu_txjgxx.png" alt=""></button>
+           <button class="wg" style="background: #dbdbdb !important;" disabled><img src="../img/wg.png" alt=""></button>
+           <button class="yc" style="background: #dbdbdb !important;" disabled><img src="../img/yc.png" alt=""></button>
        </c:otherwise>
    </c:choose>
+        <button class="exit" onclick="location.href='../Main?ID=${WorkStep.id}'"><img src="../img/backmain.png" alt=""></button>
 </footer>
 </body>
 </html>

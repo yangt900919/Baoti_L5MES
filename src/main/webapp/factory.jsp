@@ -70,7 +70,7 @@
 
 
                 </div>
-                <div class="tip">${map.note}各种描述</div>
+                <div class="tip">${map.note}</div>
             </li>
 
         </c:forEach>

@@ -117,7 +117,9 @@
         <li onclick="location.href='detail?ID=${map.id}'">
             <div class="top-box">
 
-                <div class="right">工序：${map.processName}</div>
+                <div class="right">
+                    <div class="right-top">生产顺号：${map.cardNo}</div>
+                    <div class="right-bottom">工序：${map.processName}</div></div>
                 <div class="left">
                     <div class="right-top">汇报人：${map.completionUser}</div>
                     <div class="right-bottom">汇报时间：
@@ -127,7 +129,17 @@
                     </div>
                 </div>
             </div>
-            <div class="bottom-box">生产顺号：${map.cardNo}</div>
+            <div class="bottom-box">
+   <div class="bottom-box-left">
+       完工数量：${map.completionQty}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       完工重量：${map.completionWeight}
+   </div>
+                <div class="bottom-box-right">
+                    <c:if test="${map.surplusQty>0}">
+                        <img src="../img/jy.png" width="35%" >
+                    </c:if>
+                </div>
+            </div>
         </li>
 
        <%-- <a href=""><li>

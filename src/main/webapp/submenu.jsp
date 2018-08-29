@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
     <title>Title</title>
@@ -15,10 +16,27 @@
 <body>
 <div class="main-box">
     <ul>
-        <li><a href="complete/index?stepID=${WorkStep.id}"><img src="img/btn-2.png" alt="" class=" special"></a></li>
+        <c:choose>
+            <c:when test="${WorkStep.operName.equals('包入')}">
+                <li><a href="pack/index?stepID=${WorkStep.id}"><img src="img/bzhb.png" alt="" class=" special"></a></li>
+            </c:when>
+            <c:otherwise>
+                <li><a href="complete/index?stepID=${WorkStep.id}"><img src="img/btn-2.png" alt="" class=" special"></a></li>
+
+            </c:otherwise>
+        </c:choose>
         <li><a href="exception/create?stepID=${WorkStep.id}"><img src="img/btn-1.png" alt="" class=" special"></a></li>
-        <li><a href="complete/WorkReportList?factId=${User.getFactID()}&steptID=${WorkStep.id}&type=1"><img
-                src="img/btn-4.png" alt=""></a></li>
+        <c:choose>
+            <c:when test="${WorkStep.operName.equals('包入')}">
+                <li><a href="pack/PackReportList?factId=${User.getFactID()}&packNo=&type=1"><img
+                        src="img/bzls.png" alt=""></a></li>
+            </c:when>
+            <c:otherwise>
+                <li><a href="complete/WorkReportList?factId=${User.getFactID()}&steptID=${WorkStep.id}&type=1"><img
+                        src="img/btn-4.png" alt=""></a></li>
+            </c:otherwise>
+        </c:choose>
+
         <li><a href="exception/ExceptionFilterList?processId=${WorkStep.id}&type=1&factId=${User.getFactID()}"><img
                 src="img/btn-3.png" alt=""></a></li>
 

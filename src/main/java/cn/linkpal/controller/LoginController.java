@@ -24,6 +24,7 @@ import javax.ws.rs.POST;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Controller
@@ -31,8 +32,41 @@ import java.util.stream.Collectors;
 public class LoginController {
 
 
+    @RequestMapping(value = "login.do")
+    public ModelAndView Login(HttpServletRequest request, HttpServletResponse response) {
+        ModelAndView mav = null;
+    if(request.getSession().getAttribute("User")==null)
+    {
+        mav = new ModelAndView("login");
+    }
+    else
+    {
+        mav = new ModelAndView("menu");
 
-    @RequestMapping(value = "/Login")
+        List<Factory> factoryList= (List<Factory>) request.getSession().getAttribute("factlist");
+        UserInfo user= (UserInfo) request.getSession().getAttribute("User");
+
+
+        UserInfo finalUser = user;
+        int size = factoryList.stream().filter(f -> f.getId() == finalUser.getFactID()).collect(Collectors.<Factory>toList()).size();
+
+        if (user.getFactID() == 0 || size == 0) {
+            mav.addObject("page", "factory.jsp");
+
+           // request.getSession().setAttribute("factlist", factoryList);
+        } else {
+
+
+            mav.addObject("page", "worksteps.jsp");
+            mav.addObject("factID", user.getFactID());
+        }
+    }
+
+    return mav;
+    }
+
+
+        @RequestMapping(value = "/Login")
     @ResponseBody
     @POST
     public ModelAndView Login(HttpServletRequest request, HttpServletResponse response,@RequestParam Map<String,Object> params)
@@ -52,7 +86,27 @@ public class LoginController {
 
 
         if(params.size()==0) {
-
+            mav = new ModelAndView("/login");
+            mav.addObject("msg", "请输入用户名或密码");
+        }
+        else if( request.getSession().getAttribute("User")!=null)
+        {
+            UserInfo users= (UserInfo) request.getSession().getAttribute("User");
+            if(users.getUsername().equals(params.get("usernameOrEmailAddress").toString()))
+            {
+                mav=Login(request,response);
+            }
+            else
+            {
+                mav = new ModelAndView("/login");
+               // mav.addObject("username", FName);
+                mav.addObject("msg", "请退出已登录用户");
+            }
+        }
+        else
+        {
+       /*     UserInfo users= (UserInfo) request.getSession().getAttribute("User");
+            if(users.)*/
             //登录
             url = AccessUtil.url + "api/Account";
             JSONObject object = HttpClientUtil.post(url, params);
@@ -71,8 +125,12 @@ public class LoginController {
                         MemoryData.getSessionIDMap().put(username, token);
                     }
 */
-                  if(!(AccessUtil.tokens.contains(token)))
-                   AccessUtil.tokens.add(token);
+                  /*  String finalToken = token;
+                    if(AccessUtil.tokens.stream().filter(u->u.getToken().equals(finalToken)).collect(Collectors.toList()).size()==0)
+                  {
+                      AccessUtil.tokens.add(new MemoryData(params.get("usernameOrEmailAddress").toString(),token));
+                  }*/
+
                     //获取用户信息
 
                     url = AccessUtil.url + "api/services/app/mESClientUserService/GetUserInfo";
@@ -133,11 +191,7 @@ public class LoginController {
                 mav.addObject("msg", "用户名或密码错误");
             }
         }
-        else
-        {
-            mav = new ModelAndView("/login");
-            mav.addObject("msg", "请输入用户名或密码");
-        }
+
        /* mav.addObject("user", AccessUtil.userInfo);*/
         return mav;
     }
@@ -145,6 +199,10 @@ public class LoginController {
     @RequestMapping(value = "/Loginout")
     public String Loginout(HttpServletRequest request,SessionStatus status)
     {
+        /*UserInfo user= (UserInfo) request.getSession().getAttribute("User");
+
+        List<MemoryData> md= AccessUtil.tokens.stream().filter(u->u.getUsername().equals(user.getUsername())).collect(Collectors.toList());
+        AccessUtil.tokens.removeAll(md);*/
         status.setComplete();
         request.getSession().invalidate();
         return "login";

@@ -5,7 +5,7 @@
   Time: 15:25
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java"  import="cn.linkpal.util.AccessInfo" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java"  import="cn.linkpal.util.AccessUtil" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <html>
@@ -70,7 +70,7 @@
 
 
                 </div>
-                <div class="tip">${map.note}各种描述</div>
+                <div class="tip">${map.note}</div>
             </li>
 
         </c:forEach>

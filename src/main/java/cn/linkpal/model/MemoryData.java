@@ -5,13 +5,29 @@ import java.util.Map;
 
 public class MemoryData {
 
-    private static Map<String, String> sessionIDMap = new HashMap<String,String>();
+  private String username;
 
-    public static Map<String, String> getSessionIDMap() {
-        return sessionIDMap;
+  private String token;
+
+  public MemoryData(String username,String token)
+  {
+      this.username=username;
+      this.token=token;
+  }
+
+    public String getUsername() {
+        return username;
     }
 
-    public static void setSessionIDMap(Map<String, String> sessionIDMap) {
-        MemoryData.sessionIDMap = sessionIDMap;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

@@ -39,6 +39,7 @@
     {
         height: 75%;
     }
+
 </style>
 <body>
 <c:if test="${coinfo.size()>0}">
@@ -92,6 +93,7 @@
                     <li><h3>QA检查人</h3><div>${coinfo.get(0).QACheckUser}</div></li>
                     <li><h3>备注</h3><div>${coinfo.get(0).comment}</div></li>
                 </ul>
+                <div style="height: 130px;"></div>
             </div>
         </div>
         <div role="tabpanel" class="tab-pane" id="jyl">
@@ -117,5 +119,10 @@
 </div>
 
 </c:if>
+
+<footer>
+    <button type="button" onclick="location.href='../Main?ID=${WorkStep.id}'"><img src="../img/backmain.png" alt=""></button>
+</footer>
+
 </body>
 </html>

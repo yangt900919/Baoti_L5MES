@@ -138,7 +138,8 @@ margin-top: -50px;
     </div>
     </div>
     <footer>
-        <button type="submit"><img src="../img/rzxg.png" alt=""></button>
+        <button type="submit" class="save"><img src="../img/rzxg.png" alt=""></button>
+        <button type="button" class="exit" onclick="location.href='../Main?ID=${WorkStep.id}'"><img src="../img/backmain.png" alt=""></button>
     </footer>
 </form>
 </body>

@@ -36,7 +36,7 @@ public class CompleteController {
     @POST
     public ModelAndView getProcessFlowCardAndChildensList( @RequestParam Map<String,Object> params, @ModelAttribute("Access_token")String token)
     {
-        ModelAndView mav=new ModelAndView("complete/card");
+        ModelAndView mav=new ModelAndView(params.get("url").toString());
         mav.addObject("cardNo",params);
        /* params.put("access_token",token);*/
         String url= AccessUtil.url+"api/services/app/mESClientCardService/ProcessFlowCardAndChildensList?CardNO="+params.get("CardNO").toString();

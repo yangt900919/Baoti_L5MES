@@ -17,10 +17,10 @@ public class SingleUserInterceptor implements HandlerInterceptor {
         if (url.indexOf("Login") >= 0) {
             return true;
         }
-
+UserInfo user= (UserInfo) httpServletRequest.getSession().getAttribute("User");
   String token="";
 
-   if(httpServletRequest.getSession().getAttribute("Access_token")!=null)
+   if(user!=null)
    {
    token= (String) httpServletRequest.getSession().getAttribute("Access_token");
   //String sessionid= MemoryData.getSessionIDMap().get(user.getUsername());

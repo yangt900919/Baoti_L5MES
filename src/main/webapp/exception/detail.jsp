@@ -37,6 +37,10 @@
     {
         height: 100%;
     }
+.save img
+{
+    width: 25%!important;
+}
 </style>
 <body>
 <div class="main-body">
@@ -86,13 +90,22 @@
 
     </ul>
     <div style="height: 130px;"></div>
-    <c:if test="${exinfo.size()>0 && exinfo.get(0).exceptionStatus==0 && exinfo.get(0).dealUser!='' && exinfo.get(0).dealUser!=null}">
     <footer>
-    <button onclick="location.href='close?id=${exinfo.get(0).id}'">
+    <c:choose>
+    <c:when test="${exinfo.size()>0 && exinfo.get(0).exceptionStatus==0 && exinfo.get(0).dealUser!='' && exinfo.get(0).dealUser!=null}">
+
+    <button class="save" onclick="location.href='close?id=${exinfo.get(0).id}'">
         <img src="../img/close.png" alt="">
     </button>
+
+    </c:when>
+        <c:otherwise>
+            <button class="save" disabled style="background: #dbdbdb !important;"><img src="../img/close.png" alt="" ></button>
+
+        </c:otherwise>
+    </c:choose>
+        <button class="exit" onclick="location.href='../Main?ID=${WorkStep.id}'"><img src="../img/backmain.png" alt=""></button>
     </footer>
-    </c:if>
 </div>
 </div>
 </body>
