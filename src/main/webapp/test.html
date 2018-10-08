@@ -1,69 +1,65 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>Barcode Example</title>
-    <script type="text/javascript" >
-        // 扩展API加载完毕后调用onPlusReady回调函数
-        document.addEventListener( "plusready", onPlusReady, false );
-        // 扩展API加载完毕，现在可以正常调用扩展API
-        function onPlusReady() {
-            var e = document.getElementById("scan");
-            e.removeAttribute( "disabled" );
-        }
-        var scan = null;
-        function onmarked( type, result ) {
-            var text = '未知: ';
-            switch(type){
-                case plus.barcode.QR:
-                    text = 'QR: ';
-                    break;
-                case plus.barcode.EAN13:
-                    text = 'EAN13: ';
-                    break;
-                case plus.barcode.EAN8:
-                    text = 'EAN8: ';
-                    break;
-            }
-            alert( text+result );
-        }
-        function startRecognize() {
-// 创建支持默认条码类型的识别控件
-            scan = new plus.barcode.Barcode('bcid');
-            scan.onmarked = onmarked;
-        }
-        function startScan() {
-            scan.start();
-        }
-        function cancelScan() {
-            scan.cancel();
-        }
-        function setFlash() {
-            scan.setFlash();
-        }
-    </script>
-    <style type="text/css">
-        *{
-            -webkit-user-select: none;
-        }
-        html,body{
-            margin: 0px;
-            padding: 0px;
-            height: 100%;
-        }
-        #bcid {
-            background:#0F0;
-            height:480px;
-            width:360px;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>摄像头拍照</title>
 </head>
-<body >
-<input type='button' onclick='startRecognize()' value='创建扫描控件' />
-<input type='button' onclick='startScan()' value='开始扫描' />
-<input type='button' onclick='cancelScan()' value='取消扫描' />
-<input type='button' onclick='setFlash()' value='开启闪光灯' />
-<div id= "bcid"></div>
-<input type='text' id='text'/>
+<body>
+<video id="video" width="480" height="320" controls>
+</video>
+<div>
+    <button id="capture">拍照</button>
+</div>
+<canvas id="canvas" width="480" height="320"></canvas>
+<script>
+    //访问用户媒体设备的兼容方法
+    function getUserMedia(constraints, success, error) {
+        if (navigator.mediaDevices.getUserMedia) {
+            //最新的标准API
+            navigator.mediaDevices.getUserMedia(constraints).then(success).catch(error);
+        } else if (navigator.webkitGetUserMedia) {
+            //webkit核心浏览器
+            navigator.webkitGetUserMedia(constraints,success, error)
+        } else if (navigator.mozGetUserMedia) {
+            //firfox浏览器
+            navigator.mozGetUserMedia(constraints, success, error);
+        } else if (navigator.getUserMedia) {
+            //旧版API
+            navigator.getUserMedia(constraints, success, error);
+        }
+    }
+
+    let video = document.getElementById('video');
+    let canvas = document.getElementById('canvas');
+    let context = canvas.getContext('2d');
+
+    function success(stream) {
+        //兼容webkit核心浏览器
+        let CompatibleURL = window.URL || window.webkitURL;
+        //将视频流设置为video元素的源
+        console.log(stream);
+
+        //video.src = CompatibleURL.createObjectURL(stream);
+        video.srcObject = stream;
+        video.play();
+    }
+
+    function error(error) {
+        console.log(`访问用户媒体设备失败${error.name}, ${error.message}`);
+    }
+
+    if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia) {
+        //调用用户媒体设备, 访问摄像头
+        getUserMedia({video : {width: 480, height: 320}}, success, error);
+    } else {
+        alert('不支持访问用户媒体');
+    }
+
+    document.getElementById('capture').addEventListener('click', function () {
+        context.drawImage(video, 0, 0, 480, 320);
+    })
+</script>
 </body>
 </html>

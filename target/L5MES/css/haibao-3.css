@@ -46,7 +46,7 @@ h3{
     font-weight: bold;
     padding-left: 10px;
 }
-.main div{
+.main_div{
     height: 70px;
     line-height: 70px;
     float: right;
@@ -152,11 +152,11 @@ footer button{
 }
 .save img
 {
-    width: 15%;
+    width: 20%;
 }
 .exit img
 {
-    width: 25%;
+    width: 32%;
 }
 /*
 footer img{
@@ -244,4 +244,105 @@ footer img{
 }
 .nav>li>a {
     padding: 15px 15px;
+}
+/*
+.btn-all{
+    float: right;
+    margin-right: 2%;
+    height: 100%;
+    !*background: #818181;*!
+}
+.dropdown-menu li{
+    line-height: 30px;
+    height: 30px;
+}
+.dropdown-menu{
+    min-width: 10px !important;
+    !*text-align: center;*!
+    padding: 0px;
+}
+*/
+
+.btn-all{
+    float: right;
+   /* margin-right: 10px;*/
+    height: 100%;
+/*    width: 90%;*/
+    /*margin-left: 20px;*/
+    /*background: #818181;*/
+}
+.dropdown-menu li{
+    line-height: 30px;
+    height: 30px;
+}
+.dropdown-menu{
+    min-width: 50px;
+    /*text-align: center;*/
+    padding: 0px;
+}
+.btn{
+    border-radius: 0px 4px 4px 0px;
+    padding: 10px 9px;
+    line-height: 0.5;
+    height: 100%;
+
+}
+.dropdown-menu
+{
+    top:50% !important;
+}
+#completionSPEC,#surplusSPEC,#wasteSPEC
+{
+   /* float: left;*/
+    /*background:yellow;*/
+    border: none;
+    height: 100%;
+    margin-right: 0px !important;
+    width: 44.5%;
+   /* width: 63%;*/
+}
+
+@media screen and (max-width: 480px)
+{
+    #completionSPEC,#surplusSPEC,#wasteSPEC
+    {
+        /* float: left;*/
+        /*background:yellow;*/
+        border: none;
+        height: 100%;
+        margin-right: 0px !important;
+        width: 29.5%;
+        /* width: 63%;*/
+    }
+
+}
+
+@media screen and (min-width: 481px) and (max-width: 600px)
+{
+    #completionSPEC,#surplusSPEC,#wasteSPEC
+    {
+        /* float: left;*/
+        /*background:yellow;*/
+        border: none;
+        height: 100%;
+        margin-right: 0px !important;
+        width: 37.5%;
+        /* width: 63%;*/
+    }
+
+}
+
+@font-face
+{
+    font-family: '方正超黑';
+    src:url('../fonts/fzch1.ttf') format('truetype');
+}
+
+.button_info
+{
+    font-family: 方正超黑;
+    font-size: 1.5em;
+    color: #ffffff;
+    font-style: italic;
+    /*font-weight:bolder;*/
 }

@@ -43,8 +43,13 @@
     </ul>
 </div>
 <footer>
-    <button onclick="location.href='getWorkSteps?ID=${User.getFactID()}&facname=${User.getFactName()}'" class="back" ><img src="img/back.png" alt="" style="width: 16%"></button>
-    <button onclick="parent.location.href='Loginout'" class="exit"><img src="img/exit.png" alt="" style="width: 25%"></button>
+    <button onclick="location.href='getWorkSteps?ID=${User.getFactID()}&facname=${User.getFactName()}'" class="back button_info" >
+       <%-- <img src="img/back.png" alt="" style="width: 18%">--%>返回
+    </button>
+    <button onclick="parent.location.href='Loginout'" class="exit button_info">
+        <%--<img src="img/exit.png" alt="" style="width: 30%">--%>
+        退出登录
+    </button>
 </footer>
 </body>
 </html>

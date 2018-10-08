@@ -138,8 +138,8 @@ margin-top: -50px;
     </div>
     </div>
     <footer>
-        <button type="submit" class="save"><img src="../img/rzxg.png" alt=""></button>
-        <button type="button" class="exit" onclick="location.href='../Main?ID=${WorkStep.id}'"><img src="../img/backmain.png" alt=""></button>
+        <button type="submit" class="save button_info"><%--<img src="../img/rzxg.png" alt="">--%>保存</button>
+        <button type="button" class="exit button_info" onclick="location.href='../Main?ID=${WorkStep.id}'"><%--img src="../img/backmain.png" alt="">--%>返回首页</button>
     </footer>
 </form>
 </body>

@@ -15,6 +15,9 @@
     <script src="../js/jquery-3.3.1.min.js"></script>
     <link rel="stylesheet" href="../css/cpindex.css">
     <script src="../js/util.js"></script>
+
+   <%-- <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <script type="text/javascript" src="../js/bootstrap.js"></script>--%>
 </head>
 <script>
 
@@ -121,18 +124,19 @@
                     <div class="right-top">生产顺号：${map.cardNo}</div>
                     <div class="right-bottom">工序：${map.processName}</div></div>
                 <div class="left">
-                    <div class="right-top">汇报人：${map.completionUser}</div>
-                    <div class="right-bottom">汇报时间：
-                    <script>
-                        document.write(new Date("${map.completionTime}").Format("YYYY-MM-DD hh:mm:ss"));
-                    </script>
+                    <div class="right-top">完工数量：${map.completionQty}</div>
+                    <div class="right-bottom">完工重量：${map.completionWeight}
                     </div>
                 </div>
             </div>
             <div class="bottom-box">
    <div class="bottom-box-left">
-       完工数量：${map.completionQty}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-       完工重量：${map.completionWeight}
+       汇报人：${map.completionUser}
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       汇报时间：
+       <script>
+           document.write(new Date("${map.completionTime}").Format("YYYY-MM-DD hh:mm:ss"));
+       </script>
    </div>
                 <div class="bottom-box-right">
                     <c:if test="${map.surplusQty>0}">
@@ -158,8 +162,40 @@
    <%-- <div style="height: 180px;"></div>--%>
 
 </div>
-<footer>
-    <button type="button" onclick="location.href='../Main?ID=${WorkStep.id}'"><img src="../img/backmain.png" alt=""></button>
+<footer >
+    <c:if test="${savemsg!='' && savemsg!=null}">
+        <div class="alert alert-success alert-dismissible " role="alert">
+${savemsg}
+        </div>
+    </c:if>
+    <button type="button" class="button_info" onclick="location.href='../Main?ID=${WorkStep.id}'"><%--<img src="../img/backmain.png" alt="">--%>返回首页</button>
 </footer>
 </body>
+<style>
+    .alert
+    {
+
+        width: 90% !important;
+/*        height: 50px;*/
+        position: fixed;
+/*line-height: 50px;*/
+        bottom: 50px;
+        padding: 15px;
+        margin-left: 5%;
+     /*   display: none;*/
+    }
+    .alert-success {
+        color: #3c763d;
+        background-color: #dff0d8;
+        border-color: #d6e9c6;
+    }
+</style>
+<script>
+    if($(".alert").length>0)
+    {
+        window.setTimeout(function(){
+            $(".alert").css("display","none");
+        },2000);
+    }
+</script>
 </html>

@@ -58,7 +58,7 @@ footer button{
     /*bottom: 0px;*/
     background: red;
     background: red;
-
+line-height: 45px;
     border: none;
 }
 .back
@@ -66,7 +66,10 @@ footer button{
     float: left;
 margin-left: 1%;
     margin-right: 1%;
-    background: #e1e3e6;
+    /*background: #e1e3e6;*/
+    background: -webkit-gradient(linear, left top, left bottom, from(#ff4f4f ), to(#ff6c6c));
+    background: -moz-linear-gradient(top,  #ff4f4f ,  #ff6c6c);
+    filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff4f4f ', endColorstr='#ff6c6c');
 }
 .exit
 {
@@ -77,3 +80,43 @@ margin-right: 1%;
     background: -moz-linear-gradient(top,  #ff4f4f ,  #ff6c6c);
     filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff4f4f ', endColorstr='#ff6c6c');
 }
+
+@font-face
+{
+    font-family: '方正超黑';
+    src:url('../fonts/fzch1.ttf') format('truetype');
+}
+
+.button_info
+{
+    font-family: 方正超黑;
+    font-size: 1.5em;
+    color: #ffffff;
+    font-style: italic;
+    /*font-weight:bolder;*/
+}
+
+
+
+/*
+.back>img
+{
+    width: 16%;
+}
+.exit>img
+{
+    width: 25%;
+}
+
+@media screen and (max-width: 480px)
+{
+    .back>img
+    {
+        width: 20%;
+    }
+    .exit>img
+    {
+        width: 35%;
+    }
+}
+*/

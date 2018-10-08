@@ -11,22 +11,50 @@
 <head>
     <title>登录</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
-   <%-- <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="full-screen" content="yes">
-    <meta name="x5-page-mode" content="app">--%>
-    <link rel="stylesheet" type="text/css" href=" assets/global/plugins/bootstrap/css/bootstrap.css" />
+<%--
+    <jsp:include page="resources.jsp"></jsp:include>--%>
    <link rel="stylesheet" type="text/css" href="css/login.css">
-    <%--  <link rel="stylesheet" type="text/css" href="css/phonLogin.css" media="screen and(max-width: 480px  )">--%>
 
     <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
-    <script type="text/javascript" src=" assets/global/plugins/bootstrap/js/bootstrap.min.js"></script>
-   <%-- <script language="JavaScript">
-        if (window != top)
-            top.location.href = location.href;
-    </script>--%>
-</head>
 
+
+</head>
+<style>
+ /*   .alert-warning {
+        color: #8a6d3b;
+     !*   background-color: #fcf8e3;
+        border-color: #faebcc;*!
+    }
+    .alert {
+        margin-left: 15px;
+        !*margin: auto;
+        padding: 15px;
+      !*  margin-bottom: 5px;*!
+        border: 1px solid ;
+        border-radius: 4px;
+        text-shadow: 0 1px 0 rgba(255,255,255,.2);
+        -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 1px 2px rgba(0,0,0,.05);
+        box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 1px 2px rgba(0,0,0,.05);*!
+        width: 65%;
+
+    }*/
+
+</style>
 <script>
+
+    $(document).ready(function()
+    {
+        if("${msg}"!=""&&"${msg}"!=null)
+        {
+            $("#usernameOrEmailAddress").attr("placeholder","${msg}");
+            //$("#usernameOrEmailAddress").css("color","red");
+        }
+        else
+        {
+            $("#usernameOrEmailAddress").attr("placeholder","用户名或邮箱地址");
+            //$("#usernameOrEmailAddress").css("color","#686868");
+        }
+    });
 
     addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
     function hideURLbar(){
@@ -56,6 +84,12 @@
         elem.msRequestFullscreen();
     }*/
 </script>
+<style>
+/*    #usernameOrEmailAddress:-moz-placeholder,  #usernameOrEmailAddress::-webkit-input-placeholder,  #usernameOrEmailAddress:-ms-input-placeholder
+    {
+        color: red;
+    }*/
+</style>
 <body>
 <div class="pad">
     <script>
@@ -81,6 +115,10 @@
         })*/
     </script>
 </div>
+
+
+
+
 <div class="all">
 
     <img src="img/bj2.jpg" alt="" style="width: 100%; height: 1200px; position: relative;" class="pad">
@@ -90,21 +128,9 @@
     <div class="clearfix phone"></div>
     <div class="container ">
         <div class="content ">
-            <c:if test="${msg!=''&&msg!=null }">
-                <script>
-                    alert("${msg}");
-                </script>
-                <%--<div class="alert alert-danger alert-dismissible" role="alert">
-                    <a type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></a>
-                        ${msg }
-                </div>--%>
-            </c:if>
-             <%--   <c:if test="${msg!=''&&msg!=null }">
-                    <div class="alert alert-danger alert-dismissible" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            ${msg }
-                    </div>
-                </c:if>--%>
+
+
+
         <form method="post" action="Login" class="fom" target="_top">
             <input type="text" class="form-control" id="usernameOrEmailAddress" name="usernameOrEmailAddress" placeholder="用户名或邮箱地址">
             <input type="password" class="form-control" id="password" name="password" placeholder="密码">

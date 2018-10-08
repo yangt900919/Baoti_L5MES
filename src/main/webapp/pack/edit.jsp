@@ -28,13 +28,13 @@
     }
     .main
     {
-        height: 120%;
+        height: 130%;
     }
 </style>
 <body>
 <form action="save" method="post">
 <%--    <input type="hidden" name="id" value="${model.id}">--%>
-    <input type="hidden" name="PackNo" value="${model.packNo}">
+    <%--<input type="hidden" name="PackNo" value="${model.packNo}">--%>
     <input type="hidden" name="workID" value="${model.workID}">
     <input type="hidden" name="cardId" value="${model.cardId}">
     <input type="hidden" name="cardNo" value="${model.cardNo}">
@@ -58,6 +58,7 @@
                 <li>  <h3>牌号</h3><input type="text" name="brandName" readonly value="${model.brandName}"></li>
                 <li>  <h3>技术标准</h3><input type="text" name="techStdNo" readonly value="${model.techStdNo}"></li>
                 <li>  <h3>合同号</h3><input type="text" name="contractNo" readonly value="${model.contractNo}"></li>
+                <li><h3>箱号</h3> <input type="text" name="PackNo" id="PackNo" ></li>
                 <li><h3>包装方式</h3>
                     <select name="packType">
                         <option value="塑料布">塑料布</option>
@@ -76,9 +77,22 @@
                     </select>
                 </li>
                 <li><h3>包装时间</h3> <input type="datetime-local" name="packTime" id="data" ></li>
-                <li><h3>摆放区号</h3> <input type="text" name="positionNo"  ></li>
-                <li><h3>数量</h3> <input type="text" name="qty"  value="${model.qty}"></li>
-                <li><h3>重量</h3> <input type="text" name="weight"  value="${model.weight}"></li>
+                <li><h3>摆放区号</h3>
+              <c:choose>
+                  <c:when test="${positionlist.size()>0}">
+                      <select name="positionNo">
+                          <c:forEach items="${positionlist}" var="map">
+                              <option value="${map.placeCode}">${map.placeCode}</option>
+                          </c:forEach>
+                      </select>
+                  </c:when>
+                  <c:otherwise>
+                      <input type="text" name="positionNo">
+                  </c:otherwise>
+              </c:choose>
+                </li>
+                <li><h3>数量</h3> <input type="text" name="qty" id="qty" ></li>
+                <li><h3>重量</h3> <input type="text" name="weight" id="weight" ></li>
                 <li style="height: 120px;border-bottom: none;"><h3>备注</h3>
                     <br> <textarea cols="10" rows="3" name="comment"></textarea>
                 </li>
@@ -91,8 +105,13 @@
 
 
 <footer>
-    <button type="submit" class="save"><img src="../img/rzxg.png" alt=""></button>
-    <button type="button" class="exit" onclick="location.href='../Main?ID=${WorkStep.id}'"><img src="../img/backmain.png" alt=""></button>
+
+    <div class="alert alert-warning alert-dismissible " role="alert">
+
+    </div>
+
+    <button type="button" class="save button_info" onclick="save()"><%--<img src="../img/rzxg.png" alt="">--%>保存</button>
+    <button type="button" class="exit button_info" onclick="location.href='../Main?ID=${WorkStep.id}'"><%--<img src="../img/backmain.png" alt="">--%>返回首页</button>
 </footer>
 </form>
 </body>
@@ -113,11 +132,72 @@
         $(".main").css("overflow-y","scroll");*/
     });
 
+    function save()
+    {
+        var msg="";
+        var cqty=$("#qty").val();
+        var cweight=$("#weight").val();
+        var PackNo=$("#PackNo").val();
+        if(PackNo=="")
+        {
+            msg="请输入箱号!";
+        }
+else {
+        if(cqty=="")
+        {
+            msg="请输入数量!";
+        }
+        else if(isNaN(cqty))
+        {
+            msg="请输入正确的数量!";
+        }
+        else if(cqty<=0)
+        {
+            msg="数量需大于0!";
+        }
+        else
+        {
+            if(cweight=="")
+            {
+                msg="请输入重量!"
+            }
+            else if(isNaN(cweight))
+            {
+                msg="请输入正确的重量!";
+            }
+            else if(cweight<=0)
+            {
+                msg="重量需大于0!";
+            }
+        }
+        }
+
+        if(msg=="")
+        {
+            $(".alert").css("display","none");
+            $("form").submit();
+        }
+        else
+        {
+            $(".alert").css("display","block");
+            $(".alert").text(msg);
+        }
+    }
+
+
 </script>
 <style>
     #data
     {
         font-size: 1em!important;
-    /*    font-weight: bold;*/
+        /*    font-weight: bold;*/
     }
+    .alert
+    {
+        margin: auto;
+        margin-bottom: 1%;
+        width: 90% !important;
+        display: none;
+    }
+
 </style>

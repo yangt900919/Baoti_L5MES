@@ -121,7 +121,7 @@ footer button{
     margin-right: 1%;
 }
 footer button img{
-    width: 35%;
+    width: 50%;
 }
 /*.content .title{
     width: 90%;
@@ -146,4 +146,19 @@ h1{
     float: left;
     height: 80px;
     width: 100%;
+}
+
+@font-face
+{
+    font-family: '方正超黑';
+    src:url('../fonts/fzch1.ttf') format('truetype');
+}
+
+.button_info
+{
+    font-family: 方正超黑;
+    font-size: 1.25em;
+    color: #ffffff;
+    font-style: italic;
+    /*font-weight:bolder;*/
 }

@@ -47,34 +47,34 @@
 <div class="main">
     <ul>
         <c:if test="${exinfo.size()>0}">
-            <%--<li><h3>分厂名称</h3><div>${exinfo.get(0).factName}</div></li>
-            <li><h3>工序名称</h3><div>${exinfo.get(0).processName}</div></li>
-            <li><h3>车间</h3><div>${exinfo.get(0).deptName}</div></li>
-            <li><h3>班组</h3><div>${exinfo.get(0).teamName}</div></li>--%>
-            <li><h3>异常编号</h3><div>${exinfo.get(0).exceptionNo}</div></li>
-            <li><h3>分类编号</h3><div>${exinfo.get(0).classificatNo}</div></li>
-            <li><h3>分类名称</h3><div>${exinfo.get(0).classificatName}</div></li>
-            <li><h3>细类编号</h3><div>${exinfo.get(0).fineClassNo}</div></li>
-            <li><h3>细类名称</h3><div>${exinfo.get(0).fineClassName}</div></li>
-            <%--  <li><h3>报告人</h3><div>${exinfo.get(0).reportUser}</div></li>
-            <li><h3>报告时间</h3><div>${exinfo.get(0).reportTime}</div></li>--%>
-            <li><h3>处理人</h3><div>${exinfo.get(0).dealUser}</div></li>
-            <li><h3>处理时间</h3><div>
+            <%--<li><h3>分厂名称</h3><div class="main_div">${exinfo.get(0).factName}</div></li>
+            <li><h3>工序名称</h3><div class="main_div">${exinfo.get(0).processName}</div></li>
+            <li><h3>车间</h3><div class="main_div">${exinfo.get(0).deptName}</div></li>
+            <li><h3>班组</h3><div class="main_div">${exinfo.get(0).teamName}</div></li>--%>
+            <li><h3>异常编号</h3><div class="main_div">${exinfo.get(0).exceptionNo}</div></li>
+            <li><h3>分类编号</h3><div class="main_div">${exinfo.get(0).classificatNo}</div></li>
+            <li><h3>分类名称</h3><div class="main_div">${exinfo.get(0).classificatName}</div></li>
+            <li><h3>细类编号</h3><div class="main_div">${exinfo.get(0).fineClassNo}</div></li>
+            <li><h3>细类名称</h3><div class="main_div">${exinfo.get(0).fineClassName}</div></li>
+            <%--  <li><h3>报告人</h3><div class="main_div">${exinfo.get(0).reportUser}</div></li>
+            <li><h3>报告时间</h3><div class="main_div">${exinfo.get(0).reportTime}</div></li>--%>
+            <li><h3>处理人</h3><div class="main_div">${exinfo.get(0).dealUser}</div></li>
+            <li><h3>处理时间</h3><div class="main_div">
                 <c:if test="${exinfo.get(0).dealTime !='' && exinfo.get(0).dealTime!=null }">
                     <script>
                         document.write(new Date("${exinfo.get(0).dealTime}").Format("YYYY-MM-DD hh:mm:ss"));
                     </script>
                 </c:if>
                     </div></li>
-            <li><h3>关闭人</h3><div>${exinfo.get(0).closeUser}</div></li>
-            <li><h3>关闭时间</h3><div>
+            <li><h3>关闭人</h3><div class="main_div">${exinfo.get(0).closeUser}</div></li>
+            <li><h3>关闭时间</h3><div class="main_div">
                 <c:if test="${exinfo.get(0).closeTime!='' && exinfo.get(0).closeTime!=null}">
                 <script>
                     document.write(new Date("${exinfo.get(0).closeTime}").Format("YYYY-MM-DD hh:mm:ss"));
                 </script>
                 </c:if>
                     </div></li>
-            <li><h3>关闭状态</h3><div>
+            <li><h3>关闭状态</h3><div class="main_div">
                 <%--${exinfo.get(0).exceptionStatus}--%>
                 <c:choose>
                     <c:when test="${exinfo.get(0).exceptionStatus==0}">未关闭</c:when>
@@ -94,17 +94,17 @@
     <c:choose>
     <c:when test="${exinfo.size()>0 && exinfo.get(0).exceptionStatus==0 && exinfo.get(0).dealUser!='' && exinfo.get(0).dealUser!=null}">
 
-    <button class="save" onclick="location.href='close?id=${exinfo.get(0).id}'">
-        <img src="../img/close.png" alt="">
+    <button class="save button_info" onclick="location.href='close?id=${exinfo.get(0).id}'">
+    <%--    <img src="../img/close.png" alt="">--%>关闭
     </button>
 
     </c:when>
         <c:otherwise>
-            <button class="save" disabled style="background: #dbdbdb !important;"><img src="../img/close.png" alt="" ></button>
+            <button class="save button_info" disabled style="background: #dbdbdb !important;"><%--<img src="../img/close.png" alt="" >--%>关闭</button>
 
         </c:otherwise>
     </c:choose>
-        <button class="exit" onclick="location.href='../Main?ID=${WorkStep.id}'"><img src="../img/backmain.png" alt=""></button>
+        <button class="exit button_info" onclick="location.href='../Main?ID=${WorkStep.id}'"><%--<img src="../img/backmain.png" alt="">--%>返回首页</button>
     </footer>
 </div>
 </div>

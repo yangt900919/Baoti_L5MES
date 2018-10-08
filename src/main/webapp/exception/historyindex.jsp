@@ -80,7 +80,7 @@
 
 </div>
 <footer>
-    <button type="button" onclick="location.href='../Main?ID=${WorkStep.id}'"><img src="../img/backmain.png" alt=""></button>
+    <button type="button" class="button_info" onclick="location.href='../Main?ID=${WorkStep.id}'"><%--<img src="../img/backmain.png" alt="">--%>返回首页</button>
 </footer>
 </body>
 </html>

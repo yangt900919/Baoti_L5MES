@@ -12,8 +12,9 @@
 <head>
     <title>Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
-    <jsp:include page="../resources.jsp"></jsp:include>
+<%--    <jsp:include page="../resources.jsp"></jsp:include>--%>
     <link rel="stylesheet" href="../css/cpindex.css">
+    <script src="../js/jquery-3.3.1.min.js"></script>
 </head>
 <script>
     function query(val)
@@ -60,7 +61,39 @@ white-space: nowrap;">异常描述：${map.exceptionDesciption}</div>
 
 </div>
 <footer>
-    <button type="button" onclick="location.href='../Main?ID=${WorkStep.id}'"><img src="../img/backmain.png" alt=""></button>
+    <c:if test="${savemsg!='' && savemsg!=null}">
+        <div class="alert alert-success alert-dismissible " role="alert">
+                ${savemsg}
+        </div>
+    </c:if>
+    <button type="button" class="button_info" onclick="location.href='../Main?ID=${WorkStep.id}'"><%--<img src="../img/backmain.png" alt="">--%>返回首页</button>
 </footer>
 </body>
+<style>
+    .alert
+    {
+
+        width: 90% !important;
+        /*        height: 50px;*/
+        position: fixed;
+        /*line-height: 50px;*/
+        bottom: 50px;
+        padding: 15px;
+        margin-left: 5%;
+        /*   display: none;*/
+    }
+    .alert-success {
+        color: #3c763d;
+        background-color: #dff0d8;
+        border-color: #d6e9c6;
+    }
+</style>
+<script>
+    if($(".alert").length>0)
+    {
+        window.setTimeout(function(){
+            $(".alert").css("display","none");
+        },2000);
+    }
+</script>
 </html>

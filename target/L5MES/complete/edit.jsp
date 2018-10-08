@@ -30,7 +30,15 @@
     {
         height: 70%;
     }
+
+
 </style>
+<%--<script>
+    $(document).ready(function ()
+    {
+        $(".btn-group").removeClass(".main div");
+    });
+</script>--%>
 <body>
 <form action="save" method="post">
 <%--    <input type="hidden" name="id" value="${model.id}">--%>
@@ -84,26 +92,67 @@
                             </select>
                         </li>
                         <li><h3>加工设备</h3>
-                            <select name="machiningEquipment">
 
-                                <c:forEach items="${equip}" var="map">
-                                    <option value="${map.equipment}">${map.equipment}</option>
-                                </c:forEach>
+<c:choose>
+    <c:when test="${equip.size()>0}">
+                            <select name="machiningEquipment">
+        <c:forEach items="${equip}" var="map">
+            <option value="${map.equipment}">${map.equipment}</option>
+        </c:forEach>
                             </select>
+    </c:when>
+    <c:otherwise>
+        <input type="text" name="machiningEquipment">
+    </c:otherwise>
+</c:choose>
+
+
                         </li>
                         <li><h3>加工数量</h3>
-                            <input type="text" name="completionQty" value="0">
+                            <input type="text" name="completionQty" id="completionQty">
                         </li>
 
                         <li><h3>加工重量</h3>
-                            <input type="text" name="completionWeight" value="0">
+                            <input type="text" name="completionWeight" id="completionWeight">
                         </li>
 
                         <li><h3>加工规格</h3>
-                            <input type="text" name="completionSPEC" >
+
+                            <div class="btn-all">
+
+                                <div class="btn-group" role="group">
+                                    <button type="button" id="special_1" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        特殊字符
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li class="special1">Ø</li>
+                                        <li class="special1">*</li>
+                                        <li class="special1">~</li>
+                                        <li class="special1">≧ </li>
+                                        <li class="special1">≦ </li>
+                                        <li class="special1">></li>
+                                        <li class="special1">< </li>
+                                        <li class="special1">- </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <input type="text" name="completionSPEC" id="completionSPEC">
                         </li>
                         <li><h3>摆放位置</h3>
-                            <input type="text" name="cositionNo">
+                            <c:choose>
+                                <c:when test="${positionlist.size()>0}">
+                                    <select name="cositionNo">
+                                        <c:forEach items="${positionlist}" var="map">
+                                            <option value="${map.placeCode}">${map.placeCode}</option>
+                                        </c:forEach>
+                                    </select>
+                                </c:when>
+                                <c:otherwise>
+                                    <input type="text" name="cositionNo">
+                                </c:otherwise>
+                            </c:choose>
+
                         </li>
                         <li style="height: 120px;border-bottom: none;"><h3>备注</h3>
                          <br> <textarea cols="10" rows="3" name="comment"></textarea>
@@ -116,16 +165,48 @@
                 <div class="main" id="main2">
                     <ul>
                         <li><h3>节余料规格</h3>
-                            <input type="text" name="surplusSPEC">
+                            <div class="btn-all">
+
+                                <div class="btn-group" role="group">
+                                    <button type="button" id="special_2" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        特殊字符
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li class="special2">Ø</li>
+                                        <li class="special2">*</li>
+                                        <li class="special2">~</li>
+                                        <li class="special2">≧ </li>
+                                        <li class="special2">≦ </li>
+                                        <li class="special2">></li>
+                                        <li class="special2">< </li>
+                                        <li class="special2">- </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <input type="text" name="surplusSPEC" id="surplusSPEC">
+
                         </li>
                         <li><h3>节余数量</h3>
-                            <input type="text" name="surplusQty" value="0">
+                            <input type="text" name="surplusQty" id="surplusQty" value="0">
                         </li>
                         <li><h3>节余重量</h3>
-                            <input type="text" name="surplusWeight" value="0">
+                            <input type="text" name="surplusWeight" id="surplusWeight" value="0">
                         </li>
                         <li><h3>摆放位置</h3>
-                            <input type="text" name="surplusPositionNo" >
+                            <c:choose>
+                                <c:when test="${positionlist.size()>0}">
+                                    <select name="surplusPositionNo">
+                                        <c:forEach items="${positionlist}" var="map">
+                                            <option value="${map.placeCode}">${map.placeCode}</option>
+                                        </c:forEach>
+                                    </select>
+                                </c:when>
+                                <c:otherwise>
+                                    <input type="text" name="surplusPositionNo" >
+                                </c:otherwise>
+                            </c:choose>
+
                         </li>
                     </ul>
                 </div>
@@ -134,13 +215,32 @@
                 <div class="main" id="main3">
                     <ul>
                         <li><h3>废料规格</h3>
-                            <input type="text" name="wasteSPEC">
+                            <div class="btn-all">
+
+                                <div class="btn-group" role="group">
+                                    <button type="button" id="special_3" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        特殊字符
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li class="special3">Ø</li>
+                                        <li class="special3">*</li>
+                                        <li class="special3">~</li>
+                                        <li class="special3">≧ </li>
+                                        <li class="special3">≦ </li>
+                                        <li class="special3">></li>
+                                        <li class="special3">< </li>
+                                        <li class="special3">- </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <input type="text" name="wasteSPEC" id="wasteSPEC">
                         </li>
                         <li><h3>废料数量</h3>
-                            <input type="text" name="wasteQty" value="0">
+                            <input type="text" name="wasteQty" id="wasteQty" value="0">
                         </li>
                         <li><h3>废料重量</h3>
-                            <input type="text" name="wasteWeight" value="0">
+                            <input type="text" name="wasteWeight" id="wasteWeight" value="0">
                         </li>
                     </ul>
                 </div>
@@ -153,8 +253,11 @@
 
 
 <footer>
-    <button type="submit" class="save"><img src="../img/rzxg.png" alt=""></button>
-    <button type="button" class="exit" onclick="location.href='../Main?ID=${WorkStep.id}'"><img src="../img/backmain.png" alt=""></button>
+    <div class="alert alert-warning alert-dismissible " role="alert">
+
+    </div>
+    <button type="button" class="save button_info" onclick="save()"><%--<img src="../img/rzxg.png" alt="">--%>保存</button>
+    <button type="button" class="exit button_info" onclick="location.href='../Main?ID=${WorkStep.id}'"><%--<img src="../img/backmain.png" alt="">--%>返回首页</button>
 </footer>
 </form>
 </body>
@@ -175,6 +278,143 @@
         $(".main").css("overflow-y","scroll");*/
     });
 
+
+    $('.special1').click(function () {
+        var c = this.innerText;
+        var a = $("#completionSPEC").val();
+        a = a + c;
+      //  alert(a);
+       $("#completionSPEC").val(a);
+
+    });
+
+    $('.special2').click(function () {
+        var c = this.innerText;
+        var a = $("#surplusSPEC").val();
+        a = a + c;
+        $("#surplusSPEC").val(a);
+
+    });
+
+    $('.special3').click(function () {
+        var c = this.innerText;
+        var a = $("#wasteSPEC").val();
+        a = a + c;
+        $("#wasteSPEC").val(a);
+
+    });
+
+    function save()
+    {
+        var msg="";
+        var cqty=$("#completionQty").val();
+        var cweight=$("#completionWeight").val();
+        var sqty=$("#surplusQty").val();
+        var sweight=$("#surplusWeight").val();
+        var wqty=$("#wasteQty").val();
+        var wweight=$("#wasteWeight").val();
+
+        if(cqty=="")
+        {
+            msg="请输入加工数量!";
+        }
+        else if(isNaN(cqty))
+        {
+            msg="请输入正确的加工数量!";
+        }
+        else if(cqty<=0)
+        {
+            msg="加工数量需大于0!";
+        }
+        else
+        {
+            if(cweight=="")
+            {
+                msg="请输入加工重量!"
+            }
+            else if(isNaN(cweight))
+            {
+                msg="请输入正确的加工重量!";
+            }
+            else if(cweight<=0)
+            {
+                msg="加工重量需大于0!";
+            }
+            else
+            {
+                if(sqty=="")
+                {
+                    msg="请输入节余数量!"
+                }
+                else if(isNaN(sqty))
+                {
+                    msg="请输入正确的节余数量!";
+                }
+                else if(sqty<0)
+                {
+                    msg="节余数量不能小于0!";
+                }
+                else
+                {
+                    if(sweight=="")
+                    {
+                        msg="请输入节余重量!"
+                    }
+                    else if(isNaN(sweight))
+                    {
+                        msg="请输入正确的节余重量!";
+                    }
+                    else if(sweight<0)
+                    {
+                        msg="节余重量不能小于0!";
+                    }
+                    else
+                    {
+                        if(wqty=="")
+                        {
+                            msg="请输入废料数量!"
+                        }
+                        else if(isNaN(wqty))
+                        {
+                            msg="请输入正确的废料数量!";
+                        }
+                        else if(wqty<0)
+                        {
+                            msg="废料数量不能小于0!";
+                        }
+                        else
+                        {
+                            if(wweight=="")
+                            {
+                                msg="请输入废料重量!"
+                            }
+                            else if(isNaN(wweight))
+                            {
+                                msg="请输入正确的废料重量!";
+                            }
+                            else if(wweight<0)
+                            {
+                                msg="废料重量不能小于0!";
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+
+        if(msg=="")
+        {
+            $(".alert").css("display","none");
+           $("form").submit();
+        }
+        else
+        {
+            $(".alert").css("display","block");
+            $(".alert").text(msg);
+        }
+    }
+
 </script>
 <style>
     #data
@@ -182,4 +422,12 @@
         font-size: 1em!important;
     /*    font-weight: bold;*/
     }
+    .alert
+    {
+        margin: auto;
+        margin-bottom: 1%;
+        width: 90% !important;
+        display: none;
+    }
+
 </style>

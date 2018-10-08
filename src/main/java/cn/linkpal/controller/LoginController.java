@@ -4,11 +4,11 @@ import cn.linkpal.model.Factory;
 import cn.linkpal.model.MemoryData;
 import cn.linkpal.model.UserInfo;
 import cn.linkpal.model.WorkSteps;
-import cn.linkpal.util.AccessUtil;
 import cn.linkpal.util.HttpClientUtil;
 import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,6 +31,8 @@ import java.util.stream.Collectors;
 @SessionAttributes(value={"Access_token","User","factID"},types = {String.class,UserInfo.class,Integer.class})
 public class LoginController {
 
+    @Value("${url}")
+    private String access_url;
 
     @RequestMapping(value = "login.do")
     public ModelAndView Login(HttpServletRequest request, HttpServletResponse response) {
@@ -108,7 +110,7 @@ public class LoginController {
        /*     UserInfo users= (UserInfo) request.getSession().getAttribute("User");
             if(users.)*/
             //登录
-            url = AccessUtil.url + "api/Account";
+            url = access_url + "api/Account";
             JSONObject object = HttpClientUtil.post(url, params);
             if (object != null && object.size() > 0) {
                 if (object.get("result") != null) {
@@ -133,10 +135,10 @@ public class LoginController {
 
                     //获取用户信息
 
-                    url = AccessUtil.url + "api/services/app/mESClientUserService/GetUserInfo";
-                    params.put("UserName", params.get("usernameOrEmailAddress"));
-                    params.put("access_token", token);
-                    JSONObject userinfo = HttpClientUtil.post(url, params);
+                    url = access_url + "api/services/app/mESClientUserService/GetUserInfo?userName="+params.get("usernameOrEmailAddress");
+                   /* params.put("UserName", params.get("usernameOrEmailAddress"));
+                    params.put("access_token", token);*/
+                    JSONObject userinfo = HttpClientUtil.post(url, token);
                     if (userinfo != null && userinfo.size() > 0) {
                         if (userinfo.get("result") != null) {
                             user = JSON.parseObject(userinfo.get("result").toString(), UserInfo.class);
@@ -148,22 +150,22 @@ public class LoginController {
 
                     if (user != null) {
                         //获取所有的工厂
-                        url = AccessUtil.url + "api/services/app/mESClientFactoryService/GetFactorys";
+                        url = access_url + "api/services/app/mESClientFactoryService/GetFactorys";
                         Map<String, Object> map = new HashMap<>();
                         map.put("access_token", token);
                         factoryList = JSON.parseArray(HttpClientUtil.post(url, map).get("result").toString(), Factory.class);
 
-
+                        request.getSession().setAttribute("factlist", factoryList);
                         UserInfo finalUser = user;
                         int size = factoryList.stream().filter(f -> f.getId() == finalUser.getFactID()).collect(Collectors.<Factory>toList()).size();
 
                         if (user.getFactID() == 0 || size == 0) {
                             mav.addObject("page", "factory.jsp");
 
-                            request.getSession().setAttribute("factlist", factoryList);
+
                         } else {
 
-                            url = AccessUtil.url + "api/services/app/mESClientWorkingProcedureService/GetWorkSteps";
+                            url = access_url + "api/services/app/mESClientWorkingProcedureService/GetWorkSteps";
                             workStepsList = JSON.parseArray(HttpClientUtil.post(url, map).get("result").toString(), WorkSteps.class);
                             workStepsList = workStepsList.stream().filter(w -> w.getDeptID() == finalUser.getFactID()).collect(Collectors.toList());
                             request.getSession().setAttribute("workStepsList", workStepsList);

@@ -1,11 +1,12 @@
 package cn.linkpal.controller;
 
 import cn.linkpal.model.*;
-import cn.linkpal.util.AccessUtil;
 import cn.linkpal.util.DateUtil;
 import cn.linkpal.util.HttpClientUtil;
+import cn.linkpal.util.ToolUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,6 +25,9 @@ import java.util.stream.Collectors;
 @SessionAttributes(value={"Access_token","User","WorkStep","workcard","packlist"},types = {String.class,UserInfo.class,WorkSteps.class,CardAndChilden.class,PackInfo.class})
 public class PackController {
 
+    @Value("${url}")
+    private String access_url;
+    
     @RequestMapping(value="pack/index")
     public ModelAndView index(int stepID)
     {
@@ -35,7 +39,7 @@ public class PackController {
     }
 
     @RequestMapping(value = "pack/create")
-    public ModelAndView Create(int stepID, @ModelAttribute("WorkStep")WorkSteps WorkStep, @ModelAttribute("User")UserInfo user, @ModelAttribute("workcard")CardAndChilden workcard)
+    public ModelAndView Create(int stepID, @ModelAttribute("WorkStep")WorkSteps WorkStep, @ModelAttribute("User")UserInfo user, @ModelAttribute("workcard")CardAndChilden workcard ,@ModelAttribute("Access_token")String token)
     {
         ModelAndView mav=new ModelAndView("pack/edit");
         PackInfo pi=new PackInfo();
@@ -62,6 +66,7 @@ public class PackController {
         pi.setTechStdNo(workcard.getProcessFlowCard().getTechStdNo());
         pi.setItemModelMore(workcard.getProcessFlowCard().getItemModelMore());
         mav.addObject("model",pi);
+        mav.addObject("positionlist", ToolUtil.getPositionByFactory(access_url,user.getFactID(),token));
         //mav.addObject("equip",workcard.getListCardProcessInformationt().stream().filter(u->u.getOperID()==WorkStep.getId()).collect(Collectors.toList()));
         return mav;
     }
@@ -73,16 +78,28 @@ public class PackController {
                              @ModelAttribute("Access_token")String token
             ,@ModelAttribute("User")UserInfo user)
     {
-        ModelAndView mav=new ModelAndView("pack/card");
+
         params.put("access_token",token);
-        String url= AccessUtil.url+"api/services/app/mESClientPackReportService/PackReport";
+        String url= access_url+"api/services/app/mESClientPackReportService/PackReport";
 
         JSONObject object= HttpClientUtil.post(url, params);
-        params.put("startTime",DateUtil.getPreMonthDate(1));
-        params.put("endTime",new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
         params.put("type",1);
         params.put("factID",user.getFactID());
-        return PackReportList(request,response, params,token);
+        params.put("PackNo","");
+        ModelAndView mav=PackReportList(request,response, params,token);
+        if(object.get("success").toString().equals("true"))
+        {
+            mav.addObject("savemsg","汇报成功!");
+        }
+        else
+        {
+            if(object.get("error")!=null && JSON.parseObject(object.get("error").toString()).get("message")!=null)
+            {
+                mav.addObject("savemsg",JSON.parseObject(object.get("error").toString()).get("message"));
+            }
+
+        }
+        return mav;
     }
 
     @RequestMapping(value = "pack/detail")
@@ -102,13 +119,13 @@ public class PackController {
     public ModelAndView PackReportList(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String,Object> params, @ModelAttribute("Access_token")String token)
     {
 
-        params.put("startTime", DateUtil.getPreMonthDate(Integer.parseInt(params.get("type").toString())));
-        params.put("endTime",new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+        params.put("startTime",DateUtil.getPreMonthDate(Integer.parseInt(params.get("type").toString()))+" 00:00:00");
+        params.put("endTime",new SimpleDateFormat("yyyy-MM-dd").format(new Date())+" 23:59:59");
 
         ModelAndView mav=new ModelAndView("pack/index");
         List<PackInfo> packInfoList=new ArrayList<>();
         params.put("access_token",token);
-        String url=AccessUtil.url+"api/services/app/mESClientPackReportService/PackReportListByFactAndPackNo";
+        String url=access_url+"api/services/app/mESClientPackReportService/PackReportListByFactAndPackNo";
         JSONObject object= HttpClientUtil.post(url, params);
         if(object!=null&&object.size()>0) {
             if (object.get("result") != null) {
@@ -116,7 +133,10 @@ public class PackController {
             }
         }
         mav.addObject("packlist",packInfoList);
+        mav.addObject("savemsg","");
         request.getSession().setAttribute("paparams",params);
         return mav;
     }
+
+
 }

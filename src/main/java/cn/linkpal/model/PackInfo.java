@@ -117,9 +117,9 @@ public class PackInfo {
 
     public PackInfo()
     {
-        this.PackNo="";
-        this.Weight=0;
-        this.Qty=0;
+        //this.PackNo="";
+        /*this.Weight=0;
+        this.Qty=0;*/
        /* this.QACheckTime=null;
         this.QACheckUser=null;
         this.BeginTime=null;

@@ -2,10 +2,10 @@ package cn.linkpal.controller;
 
 import cn.linkpal.model.UserInfo;
 import cn.linkpal.model.WorkSteps;
-import cn.linkpal.util.AccessUtil;
 import cn.linkpal.util.HttpClientUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,6 +20,10 @@ import java.util.stream.Collectors;
 @SessionAttributes(value={"Access_token","User","workStepsList","WorkStep"},types = {String.class,UserInfo.class,WorkSteps.class,WorkSteps.class})
 public class MainController {
 
+
+    @Value("${url}")
+    private String access_url;
+    
     Map<String,Object> map=new HashMap<>();
     /**
      * 获取所有工序
@@ -34,7 +38,7 @@ public class MainController {
         ModelAndView mav=new ModelAndView("worksteps");
         List<WorkSteps> workStepsList=new ArrayList<>();
         map.put("access_token",token);
-        String url= AccessUtil.url+"api/services/app/mESClientWorkingProcedureService/GetWorkSteps";
+        String url= access_url+"api/services/app/mESClientWorkingProcedureService/GetWorkSteps";
         JSONObject object= HttpClientUtil.post(url, map);
         if(object!=null&&object.size()>0) {
             if (object.get("result") != null) {

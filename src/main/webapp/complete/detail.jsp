@@ -55,14 +55,14 @@
         <div role="tabpanel" class="tab-pane active" id="wg">
             <div class="main" id="main1">
                 <ul>
-                    <li><h3>汇报编号</h3><div>${coinfo.get(0).reportNo}</div></li>
-                    <li><h3>工艺卡号</h3><div>${coinfo.get(0).cardNo}</div></li>
-                    <li><h3>加工设备</h3><div>${coinfo.get(0).machiningEquipment}</div></li>
-                    <li><h3>加工数量</h3><div>${coinfo.get(0).completionQty}</div></li>
-                    <li><h3>加工重量</h3><div>${coinfo.get(0).completionWeight}</div></li>
-                    <li><h3>加工规格</h3><div>${coinfo.get(0).completionSPEC}</div></li>
-                    <li><h3>摆放位置</h3><div>${coinfo.get(0).positionNo}</div></li>
-                    <%--<li><h3>开工时间</h3><div>
+                    <li><h3>汇报编号</h3><div class="main_div">${coinfo.get(0).reportNo}</div></li>
+                    <li><h3>工艺卡号</h3><div class="main_div">${coinfo.get(0).cardNo}</div></li>
+                    <li><h3>加工设备</h3><div class="main_div">${coinfo.get(0).machiningEquipment}</div></li>
+                    <li><h3>加工数量</h3><div class="main_div">${coinfo.get(0).completionQty}</div></li>
+                    <li><h3>加工重量</h3><div class="main_div">${coinfo.get(0).completionWeight}</div></li>
+                    <li><h3>加工规格</h3><div class="main_div">${coinfo.get(0).completionSPEC}</div></li>
+                    <li><h3>摆放位置</h3><div class="main_div">${coinfo.get(0).positionNo}</div></li>
+                    <%--<li><h3>开工时间</h3><div class="main_div">
                         <c:if test="${coinfo.get(0).beginTime!='' && coinfo.get(0).beginTime!=null}">
                             <script>
                                 document.write(new Date("${coinfo.get(0).beginTime}").Format("YYYY-MM-DD hh:mm:ss"));
@@ -70,9 +70,9 @@
                         </c:if>
 
                     </div></li>
-                    <li><h3>开工人</h3><div>${coinfo.get(0).beginUser}</div></li>
-                    <li><h3>开工人班组</h3><div>${coinfo.get(0).beginUserTeam}</div></li>--%>
-                    <li><h3>加工时间</h3><div>
+                    <li><h3>开工人</h3><div class="main_div">${coinfo.get(0).beginUser}</div></li>
+                    <li><h3>开工人班组</h3><div class="main_div">${coinfo.get(0).beginUserTeam}</div></li>--%>
+                    <li><h3>加工时间</h3><div class="main_div">
                         <c:if test="${coinfo.get(0).completionTime!='' && coinfo.get(0).completionTime!=null}">
 
                             <script>
@@ -81,17 +81,17 @@
                             </script>
                         </c:if>
                     </div></li>
-                    <li><h3>加工人</h3><div>${coinfo.get(0).completionUser}</div></li>
-                    <li><h3>加工人班组</h3><div>${coinfo.get(0).completionUserTeam}</div></li>
-                    <li><h3>QA检查时间</h3><div>
+                    <li><h3>加工人</h3><div class="main_div">${coinfo.get(0).completionUser}</div></li>
+                    <li><h3>加工人班组</h3><div class="main_div">${coinfo.get(0).completionUserTeam}</div></li>
+                    <li><h3>QA检查时间</h3><div class="main_div">
                         <c:if test="${coinfo.get(0).QACheckTime!='' && coinfo.get(0).QACheckTime!=null}">
                             <script>
                                 document.write(new Date("${coinfo.get(0).QACheckTime}").Format("YYYY-MM-DD hh:mm:ss"));
                             </script>
                         </c:if>
                     </div></li>
-                    <li><h3>QA检查人</h3><div>${coinfo.get(0).QACheckUser}</div></li>
-                    <li><h3>备注</h3><div>${coinfo.get(0).comment}</div></li>
+                    <li><h3>QA检查人</h3><div class="main_div">${coinfo.get(0).QACheckUser}</div></li>
+                    <li><h3>备注</h3><div class="main_div">${coinfo.get(0).comment}</div></li>
                 </ul>
                 <div style="height: 130px;"></div>
             </div>
@@ -99,19 +99,19 @@
         <div role="tabpanel" class="tab-pane" id="jyl">
             <div class="main" id="main2">
                 <ul>
-                    <li><h3>节余料规格</h3><div>${coinfo.get(0).surplusSPEC}</div></li>
-                    <li><h3>节余数量</h3><div>${coinfo.get(0).surplusQty}</div></li>
-                    <li><h3>节余重量</h3><div>${coinfo.get(0).surplusWeight}</div></li>
-                    <li><h3>摆放位置</h3><div>${coinfo.get(0).surplusPositionNo}</div></li>
+                    <li><h3>节余料规格</h3><div class="main_div">${coinfo.get(0).surplusSPEC}</div></li>
+                    <li><h3>节余数量</h3><div class="main_div">${coinfo.get(0).surplusQty}</div></li>
+                    <li><h3>节余重量</h3><div class="main_div">${coinfo.get(0).surplusWeight}</div></li>
+                    <li><h3>摆放位置</h3><div class="main_div">${coinfo.get(0).surplusPositionNo}</div></li>
                 </ul>
             </div>
         </div>
         <div role="tabpanel" class="tab-pane" id="fl">
             <div class="main" id="main3">
                 <ul>
-                    <li><h3>废料规格</h3><div>${coinfo.get(0).wasteSPEC}</div></li>
-                    <li><h3>废料数量</h3><div>${coinfo.get(0).wasteSPEC}</div></li>
-                    <li><h3>废料重量</h3><div>${coinfo.get(0).wasteWeight}</div></li>
+                    <li><h3>废料规格</h3><div class="main_div">${coinfo.get(0).wasteSPEC}</div></li>
+                    <li><h3>废料数量</h3><div class="main_div">${coinfo.get(0).wasteSPEC}</div></li>
+                    <li><h3>废料重量</h3><div class="main_div">${coinfo.get(0).wasteWeight}</div></li>
                 </ul>
             </div>
         </div>
@@ -121,7 +121,7 @@
 </c:if>
 
 <footer>
-    <button type="button" onclick="location.href='../Main?ID=${WorkStep.id}'"><img src="../img/backmain.png" alt=""></button>
+    <button type="button" class="button_info" onclick="location.href='../Main?ID=${WorkStep.id}'">返回首页<%--<img src="../img/backmain.png" alt="" style="width: 16%">--%></button>
 </footer>
 
 </body>

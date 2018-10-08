@@ -37,6 +37,7 @@ body{
     /*background: #00F7DE;*/
     float: left;
     height: 60%;
+    font-weight: bold;
 }
 .bottom-box{
     width: 96%;
@@ -48,6 +49,7 @@ body{
     color: #818181;
     font-size: 1em;
     padding-top: 18px;
+
 }
 .right{
     width: 40%;
@@ -273,4 +275,19 @@ footer img{
 .bottom-box-right
 {
     float: right;
+}
+
+@font-face
+{
+    font-family: '方正超黑';
+    src:url('../fonts/fzch1.ttf') format('truetype');
+}
+
+.button_info
+{
+    font-family: 方正超黑;
+    font-size: 1.5em;
+    color: #ffffff;
+    font-style: italic;
+    /*font-weight:bolder;*/
 }

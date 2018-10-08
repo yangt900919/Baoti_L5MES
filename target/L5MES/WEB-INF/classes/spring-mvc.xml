@@ -24,22 +24,34 @@
 
 
 
-	   <!--    &lt;!&ndash; 配置拦截器 &ndash;&gt;
-	    <mvc:interceptors>
+	       <!-- 配置拦截器 -->
+	   <!-- <mvc:interceptors>
 	        &lt;!&ndash;&lt;!&ndash; 多个拦截器，顺序执行 &ndash;&gt;&ndash;&gt;
 	         &lt;!&ndash;&lt;!&ndash; 配置登陆拦截器 &ndash;&gt;&ndash;&gt;
 	         <mvc:interceptor>
-	          <mvc:mapping path="/" />
-	             <mvc:mapping path="/**"/>
-				&lt;!&ndash; <mvc:exclude-mapping path="/supplier"/>&ndash;&gt;
-	             <bean class="cn.linkpal.Interceptor.SingleUserInterceptor"></bean>
-	         </mvc:interceptor>
-	    </mvc:interceptors>-->
 
+	             <mvc:mapping path="/**"/>
+				 <mvc:exclude-mapping path="/Login"/>
+	             <bean class="cn.linkpal.interceptor.SessionInterceptor"></bean>
+	         </mvc:interceptor>
+	    </mvc:interceptors>
+-->
 
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="maxUploadSize" value="104857600" />
 		<property name="maxInMemorySize" value="4096" />
 		<property name="defaultEncoding" value="UTF-8"></property>
 	</bean>
+
+	<bean id="propertyPlaceHolderConfigurer"
+		  class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
+		<property name="ignoreResourceNotFound" value="true"/>
+		<property name="locations">
+			<list>                <!-- 把需要配置的properties文件配置在这里，可以有多个 -->
+				<value>classpath:set_config.properties</value>
+			</list>
+		</property>
+	</bean>
+
 </beans>

@@ -1,11 +1,11 @@
 package cn.linkpal.controller;
 
 import cn.linkpal.model.*;
-import cn.linkpal.util.AccessUtil;
 import cn.linkpal.util.DateUtil;
 import cn.linkpal.util.HttpClientUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,6 +22,9 @@ import java.util.stream.Collectors;
 @SessionAttributes(value={"Access_token","User","WorkStep","exceptionList"},types = {String.class,UserInfo.class,WorkSteps.class,ExceptionInfo.class})
 public class ExceptionController {
 
+    @Value("${url}")
+    private String access_url;
+    
     Map<String,Object> map=new HashMap<>();
 
     @RequestMapping(value = "exception/ExceptionFilterList")
@@ -31,13 +34,14 @@ public class ExceptionController {
     {
         ModelAndView mav=new ModelAndView("exception/historyindex");
 
-            params.put("startTime",DateUtil.getPreMonthDate(Integer.parseInt(params.get("type").toString())));
-            params.put("endTime",new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+        params.put("startTime",DateUtil.getPreMonthDate(Integer.parseInt(params.get("type").toString()))+" 00:00:00");
+        params.put("endTime",new SimpleDateFormat("yyyy-MM-dd").format(new Date())+" 23:59:59");
            //params.put("factId",user.)
         List<ExceptionInfo> exceptionList=new ArrayList<>();
         params.put("access_token",token);
       exceptionList=getExList("api/services/app/mESClientExceptionService/ExceptionFilterList",params);
         mav.addObject("exceptionList",exceptionList);
+        mav.addObject("savemsg","");
        /* mav.addObject("processId",params.get("processId"));*/
         request.getSession().setAttribute("exceptionParam",params);
         return mav;
@@ -54,6 +58,7 @@ public class ExceptionController {
       /*  params.put("")*/
         exceptionList=getExList("api/services/app/mESClientExceptionService/ExceptionList",params);
         mav.addObject("exceptionList",exceptionList);
+        mav.addObject("savemsg","");
         request.getSession().setAttribute("exceptionParam",params);
         return mav;
     }
@@ -73,7 +78,7 @@ public class ExceptionController {
     public ModelAndView Close(HttpServletRequest request, HttpServletResponse response,@RequestParam Map<String,Object> params,@ModelAttribute("Access_token")String token)
     {
         params.put("access_token",token);
-        String url= AccessUtil.url+"api/services/app/mESClientExceptionService/CloseException?id="+Integer.parseInt(params.get("id").toString());
+        String url= access_url+"api/services/app/mESClientExceptionService/CloseException?id="+Integer.parseInt(params.get("id").toString());
         JSONObject object= HttpClientUtil.post(url, token);
         return ExceptionList(request,response, (Map<String, Object>) request.getSession().getAttribute("exceptionParam"),token);
     }
@@ -125,14 +130,27 @@ public class ExceptionController {
     public ModelAndView Save(HttpServletRequest request, HttpServletResponse response, @RequestParam Map<String,Object> params,
                              @ModelAttribute("Access_token")String token)
     {
-        ModelAndView mav=new ModelAndView("exception/index");
+
         params.put("access_token",token);
 
 
-        String url= AccessUtil.url+"api/services/app/mESClientExceptionService/ExceptionReport";
+        String url= access_url+"api/services/app/mESClientExceptionService/ExceptionReport";
 
         JSONObject object= HttpClientUtil.post(url, params);
-        return ExceptionList(request,response,params,token);
+        ModelAndView mav=ExceptionList(request,response,params,token);
+        if(object.get("success").toString().equals("true"))
+        {
+            mav.addObject("savemsg","汇报成功!");
+        }
+        else
+        {
+            if(object.get("error")!=null && JSON.parseObject(object.get("error").toString()).get("message")!=null)
+            {
+                mav.addObject("savemsg",JSON.parseObject(object.get("error").toString()).get("message"));
+            }
+
+        }
+        return mav;
     }
 
 
@@ -152,7 +170,7 @@ public class ExceptionController {
     {
         List<ExceptionClassificat> exceptionClassificatList=new ArrayList<>();
         map.put("access_token",token);
-        String url= AccessUtil.url+"api/services/app/mESClientExceptionService/ExClass";
+        String url= access_url+"api/services/app/mESClientExceptionService/ExClass";
         JSONObject object= HttpClientUtil.post(url, map);
         if(object!=null&&object.size()>0) {
             if (object.get("result") != null) {
@@ -167,7 +185,7 @@ public class ExceptionController {
     {
         List<ExceptionFineClass> exceptionFineClassList=new ArrayList<>();
         map.put("access_token",token);
-        String url= AccessUtil.url+"api/services/app/mESClientExceptionService/ExType";
+        String url= access_url+"api/services/app/mESClientExceptionService/ExType";
         JSONObject object= HttpClientUtil.post(url, map);
         if(object!=null&&object.size()>0) {
             if (object.get("result") != null) {
@@ -183,7 +201,7 @@ public class ExceptionController {
 
         List<ExceptionInfo> exceptionList=new ArrayList<>();
         /*map.put("access_token",token);*/
-        String urls= AccessUtil.url+url;
+        String urls= access_url+url;
         JSONObject object= HttpClientUtil.post(urls, map);
         if(object!=null&&object.size()>0) {
             if (object.get("result") != null) {
